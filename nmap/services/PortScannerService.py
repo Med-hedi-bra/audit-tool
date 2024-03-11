@@ -63,7 +63,7 @@ class PortScannerService:
                 service_version=element["service_version"],
             )
         from .PortScannerReportService import PortScannerReportService
-        PortScannerReportService.generate_report(port_scanner.id,port_scanner)
+        PortScannerReportService.generate_report(port_scanner)
         return PortScannerSerializer(port_scanner).data
 
 

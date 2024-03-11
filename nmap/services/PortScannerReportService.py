@@ -12,13 +12,13 @@ from nmap.services.PortScannerService import PortScannerService
 class PortScannerReportService:
 
     @staticmethod
-    def generate_report(idScanner,scannnerInstance):
-        # to avoid circular import
+    def generate_report(scannnerInstance):
+        
         print("Generate report")
-        scanner = PortScannerService.get_port_scanner_by_id(idScanner)
+        scanner = PortScannerService.get_port_scanner_by_id(scannnerInstance.id)
         ports_info = scanner["port_scanner_line"]
         scan_info = scanner["port_scanner"]
-        filename = 'hello_world'+str(idScanner)+'.pdf'
+        filename = 'hello_world'+str(scannnerInstance.id)+'.pdf'
         # filename = "hello_world.pdf"
         file_path = os.path.join(settings.MEDIA_ROOT, filename)
         pdf = canvas.Canvas(file_path)
