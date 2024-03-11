@@ -1,0 +1,107 @@
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-03-06 15:38 UTC
+Nmap scan report for cdn-185-199-109-153.github.com (185.199.109.153)
+Host is up (0.062s latency).
+
+PORT     STATE    SERVICE       VERSION
+21/tcp   filtered ftp
+22/tcp   filtered ssh
+23/tcp   filtered telnet
+25/tcp   filtered smtp
+53/tcp   filtered domain
+80/tcp   open     http          GitHub.com
+110/tcp  filtered pop3
+111/tcp  filtered rpcbind
+135/tcp  filtered msrpc
+139/tcp  filtered netbios-ssn
+143/tcp  filtered imap
+443/tcp  open     ssl/https     GitHub.com
+445/tcp  filtered microsoft-ds
+1723/tcp filtered pptp
+3306/tcp filtered mysql
+3389/tcp filtered ms-wbt-server
+8080/tcp filtered http-proxy
+2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+OS details: Linux 2.6.9 - 2.6.33
+
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port80-TCP:V=7.80%I=7%D=3/6%Time=65E88DE3%P=x86_64-pc-linux-gnu%r(GetRe
+SF:quest,1044,"HTTP/1\.1\x20404\x20Not\x20Found\r\nConnection:\x20close\r\
+SF:nContent-Length:\x209115\r\nServer:\x20GitHub\.com\r\nContent-Type:\x20
+SF:text/html;\x20charset=utf-8\r\nETag:\x20\"65e15929-239b\"\r\nContent-Se
+SF:curity-Policy:\x20default-src\x20'none';\x20style-src\x20'unsafe-inline
+SF:';\x20img-src\x20data:;\x20connect-src\x20'self'\r\nX-GitHub-Request-Id
+SF::\x204332:11588D:10A1DED:10F0643:65E8847C\r\nAccept-Ranges:\x20bytes\r\
+SF:nDate:\x20Wed,\x2006\x20Mar\x202024\x2015:38:11\x20GMT\r\nVia:\x201\.1\
+SF:x20varnish\r\nAge:\x202407\r\nX-Served-By:\x20cache-mrs10553-MRS\r\nX-C
+SF:ache:\x20HIT\r\nX-Cache-Hits:\x201\r\nX-Timer:\x20S1709739492\.612582,V
+SF:S0,VE1\r\nVary:\x20Accept-Encoding\r\nX-Fastly-Request-ID:\x20439fa56cb
+SF:257fec137bddccdab38c5b7d270d3fa\r\n\r\n<!DOCTYPE\x20html>\n<html>\n\x20
+SF:\x20<head>\n\x20\x20\x20\x20<meta\x20http-equiv=\"Content-type\"\x20con
+SF:tent=\"text/html;\x20charset=utf-8\">\n\x20\x20\x20\x20<meta\x20http-eq
+SF:uiv=\"Content-Security-Policy\"\x20content=\"default-src\x20'none';\x20
+SF:style-src\x20'unsafe-inline';\x20img-src\x20data:;\x20connect-src\x20's
+SF:elf'\">\n\x20\x20\x20\x20<title>Site\x20not\x20found\x20&middot;\x20Git
+SF:Hub\x20Pages</title>\n\x20\x20\x20\x20<style")%r(HTTPOptions,1E1,"HTTP/
+SF:1\.1\x20405\x20Method\x20Not\x20Allowed\r\nConnection:\x20close\r\nCont
+SF:ent-Length:\x20131\r\nServer:\x20Varnish\r\nRetry-After:\x200\r\nAccept
+SF:-Ranges:\x20bytes\r\nDate:\x20Wed,\x2006\x20Mar\x202024\x2015:38:11\x20
+SF:GMT\r\nVia:\x201\.1\x20varnish\r\nX-Served-By:\x20cache-mrs10534-MRS\r\
+SF:nX-Cache:\x20MISS\r\nX-Cache-Hits:\x200\r\nX-Timer:\x20S1709739492\.713
+SF:296,VS0,VE0\r\nX-Fastly-Request-ID:\x203ee7ce8a9d920ab35b24b40494de9f96
+SF:ebd9f4f2\r\n\r\n<html>\n<head><title>405\x20Not\x20Allowed</title></hea
+SF:d>\n<body\x20bgcolor=\"white\">\n<center><h1>405\x20Not\x20Allowed</h1>
+SF:</center>\n</body>\n</html>")%r(RTSPRequest,94,"HTTP/1\.1\x20400\x20Bad
+SF:\x20Request\r\nConnection:\x20close\r\nContent-Length:\x2011\r\ncontent
+SF:-type:\x20text/plain;\x20charset=utf-8\r\nx-served-by:\x20cache-mrs1055
+SF:8\r\n\r\nBad\x20Request");
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port443-TCP:V=7.80%T=SSL%I=7%D=3/6%Time=65E88DE9%P=x86_64-pc-linux-gnu%
+SF:r(GetRequest,1D4E,"HTTP/1\.1\x20404\x20Not\x20Found\r\nConnection:\x20c
+SF:lose\r\nContent-Length:\x209115\r\nServer:\x20GitHub\.com\r\nContent-Ty
+SF:pe:\x20text/html;\x20charset=utf-8\r\nx-origin-cache:\x20HIT\r\nETag:\x
+SF:20\"65e15929-239b\"\r\nContent-Security-Policy:\x20default-src\x20'none
+SF:';\x20style-src\x20'unsafe-inline';\x20img-src\x20data:;\x20connect-src
+SF:\x20'self'\r\nX-GitHub-Request-Id:\x2080D6:18FFFA:117365A:11C4BE6:65E88
+SF:DE9\r\nAccept-Ranges:\x20bytes\r\nDate:\x20Wed,\x2006\x20Mar\x202024\x2
+SF:015:38:17\x20GMT\r\nVia:\x201\.1\x20varnish\r\nAge:\x200\r\nX-Served-By
+SF::\x20cache-mrs10529-MRS\r\nX-Cache:\x20MISS\r\nX-Cache-Hits:\x200\r\nX-
+SF:Timer:\x20S1709739498\.763386,VS0,VE113\r\nVary:\x20Accept-Encoding\r\n
+SF:X-Fastly-Request-ID:\x201f3ec9d3fb1b7a048747a70bf0913fba5c091e5a\r\n\r\
+SF:n<!DOCTYPE\x20html>\n<html>\n\x20\x20<head>\n\x20\x20\x20\x20<meta\x20h
+SF:ttp-equiv=\"Content-type\"\x20content=\"text/html;\x20charset=utf-8\">\
+SF:n\x20\x20\x20\x20<meta\x20http-equiv=\"Content-Security-Policy\"\x20con
+SF:tent=\"default-src\x20'none';\x20style-src\x20'unsafe-inline';\x20img-s
+SF:rc\x20data:;\x20connect-src\x20'self'\">\n\x20\x20\x20\x20<title>Site\x
+SF:20not\x20found\x20&middot;\x20GitHub\x20Pag")%r(HTTPOptions,1E1,"HTTP/1
+SF:\.1\x20405\x20Method\x20Not\x20Allowed\r\nConnection:\x20close\r\nConte
+SF:nt-Length:\x20131\r\nServer:\x20Varnish\r\nRetry-After:\x200\r\nAccept-
+SF:Ranges:\x20bytes\r\nDate:\x20Wed,\x2006\x20Mar\x202024\x2015:38:18\x20G
+SF:MT\r\nVia:\x201\.1\x20varnish\r\nX-Served-By:\x20cache-mrs10581-MRS\r\n
+SF:X-Cache:\x20MISS\r\nX-Cache-Hits:\x200\r\nX-Timer:\x20S1709739498\.2226
+SF:63,VS0,VE0\r\nX-Fastly-Request-ID:\x209d13b3dcf462ef42fe122b50c546209aa
+SF:3866a4a\r\n\r\n<html>\n<head><title>405\x20Not\x20Allowed</title></head
+SF:>\n<body\x20bgcolor=\"white\">\n<center><h1>405\x20Not\x20Allowed</h1><
+SF:/center>\n</body>\n</html>")%r(FourOhFourRequest,25EA,"HTTP/1\.1\x20404
+SF:\x20Not\x20Found\r\nConnection:\x20close\r\nContent-Length:\x209115\r\n
+SF:Server:\x20GitHub\.com\r\nContent-Type:\x20text/html;\x20charset=utf-8\
+SF:r\nETag:\x20\"65e15929-239b\"\r\nContent-Security-Policy:\x20default-sr
+SF:c\x20'none';\x20style-src\x20'unsafe-inline';\x20img-src\x20data:;\x20c
+SF:onnect-src\x20'self'\r\nX-GitHub-Request-Id:\x20D7D6:18FFFA:117374C:11C
+SF:4CD5:65E88DE9\r\nAccept-Ranges:\x20bytes\r\nDate:\x20Wed,\x2006\x20Mar\
+SF:x202024\x2015:38:18\x20GMT\r\nVia:\x201\.1\x20varnish\r\nAge:\x200\r\nX
+SF:-Served-By:\x20cache-mrs10578-MRS\r\nX-Cache:\x20MISS\r\nX-Cache-Hits:\
+SF:x200\r\nX-Timer:\x20S1709739498\.431546,VS0,VE114\r\nVary:\x20Accept-En
+SF:coding\r\nX-Fastly-Request-ID:\x20d634c4a9a6f9c8602ff56ed868aa927ea9405
+SF:181\r\n\r\n<!DOCTYPE\x20html>\n<html>\n\x20\x20<head>\n\x20\x20\x20\x20
+SF:<meta\x20http-equiv=\"Content-type\"\x20content=\"text/html;\x20charset
+SF:=utf-8\">\n\x20\x20\x20\x20<meta\x20http-equiv=\"Content-Security-Polic
+SF:y\"\x20content=\"default-src\x20'none';\x20style-src\x20'unsafe-inline'
+SF:;\x20img-src\x20data:;\x20connect-src\x20'self'\">\n\x20\x20\x20\x20<ti
+SF:tle>Site\x20not\x20found\x20&middot;\x20GitHub\x20Pages</title>\n\x20\x
+SF:20\x20\x20<style");
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Crestron XPanel control system (90%), FreeBSD 7.0-STABLE (88%), OpenWrt 0.9 - 7.09 (Linux 2.4.30 - 2.4.34) (88%), OpenWrt White Russian 0.9 (Linux 2.4.30) (88%), OpenWrt Kamikaze 7.09 (Linux 2.6.22) (88%), Asus RT-AC66U router (Linux 2.6) (87%), Asus RT-N10 router or AXIS 211A Network Camera (Linux 2.6) (87%), Linux 2.6.18 (87%), Asus RT-N16 WAP (Linux 2.6) (87%), Asus RT-N66U WAP (Linux 2.6) (87%)
+No exact OS matches for host (test conditions non-ideal).
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 28.40 seconds
