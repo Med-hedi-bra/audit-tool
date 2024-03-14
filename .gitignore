@@ -37,3 +37,10 @@ local_settings.py
 
 # Ignore migrations
 */migrations/
+
+# Ignore assets
+/assets/
+
+# Ignore sqlite Database
+*.sqlite3
+

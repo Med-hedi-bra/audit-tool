@@ -1,4 +1,7 @@
-def verify_password_strength(password):
+class AuthTestingService:
+
+    @staticmethod
+    def verify_password_strength(password):
         """
         Verify if the password is strong enough
         """
@@ -35,5 +38,3 @@ def verify_password_strength(password):
 
         return results
 
-pas = "AA**$$passwor$$2d1"
-print(verify_password_strength(pas))

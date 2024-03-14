@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     
 
     'nmap',
+    'testing_auth',
     'rest_framework_swagger',
     'drf_yasg',
     'rest_framework',
