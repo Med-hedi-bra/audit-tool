@@ -24,6 +24,7 @@ class AuthTestingService:
 
         # Verify strength
         results = {
+            "Minimum 8 characters": "Verified" if len(password) >= 8 else "Unverified",
             "Minimum 2 lowercase letters": (
                 "Verified" if lowercase_count >= 2 else "Unverified"
             ),
@@ -37,4 +38,3 @@ class AuthTestingService:
         }
 
         return results
-
