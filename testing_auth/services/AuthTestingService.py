@@ -46,5 +46,14 @@ class AuthTestingService:
 
         return results
 
+ 
+    @staticmethod
+    def verify_username_strength(username):
+        pattern = r'^[a-zA-Z0-9_]{3,20}$'  
+        regex = re.compile(pattern)
 
-            
+        if regex.match(username):
+            return True
+        else:
+            return False
+                

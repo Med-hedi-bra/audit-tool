@@ -3,5 +3,5 @@ from django.urls import path
 
 
 urlpatterns = [
-    path('password-strength/', views.verify_password_strength),
+    path('username-password-strength/', views.verify_username_and_password_strength),
 ]
