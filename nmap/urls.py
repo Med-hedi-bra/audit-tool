@@ -15,6 +15,9 @@ urlpatterns = (
         path("dns-service/ipv6", views.convert_domain_to_ipv6),
         path("dns-service/mail-server", views.convert_domain_to_mail_server),
         path("get-report/<int:id>", views.get_repport),
+        path('extract-robots-txt/', views.extract_robots_txt),
+        path('get-technologies/', views.get_technologies),
+
     ]
 
 )

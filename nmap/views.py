@@ -10,6 +10,8 @@ from django.conf import settings
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import os
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 @api_view(["GET"])
@@ -180,6 +182,7 @@ from drf_yasg.utils import swagger_auto_schema
 # @swagger_auto_schema(
 #         responses={200: MailServerSerializer(many=True)}
 # )
+
 @api_view(["GET"])
 def convert_domain_to_mail_server(request):
     if "domain" in request.query_params and request.query_params["domain"]:
@@ -193,3 +196,26 @@ def get_repport(request,id):
     filename = PortScannerReportService.get_report_by_id(id)
     pdf_url = request.build_absolute_uri(settings.MEDIA_URL + filename)
     return Response({'pdf_url': pdf_url})
+
+@api_view(["GET"])
+def get_technologies(request):
+    if "url" not in request.data:
+        return JsonResponse({"error":"Invalid request"}, status=400)
+    try:
+        response = NmapService.get_technologies(request.data["url"])
+        return JsonResponse(response, safe=False)
+    except:
+        return JsonResponse({"error":"Error fetching technologies"}, status=400)
+
+@csrf_exempt
+@api_view(['POST'])
+def extract_robots_txt(request):
+    if "url" not in request.data:
+        return JsonResponse({"error":"Invalid request"}, status=400)
+    url = request.data["url"]
+    try:
+        ans = NmapService.extract_robots_txt(url)
+        return JsonResponse({"robots_content":ans}, safe=False)
+    except Exception as e:
+        return JsonResponse({"error":"Error fetching robots.txt content"}, status=400)
+     

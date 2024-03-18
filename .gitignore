@@ -43,5 +43,7 @@ local_settings.py
 
 # Ignore sqlite Database
 *.sqlite3
+test.py
+
 
 

@@ -1,5 +1,9 @@
+from io import StringIO
 import subprocess
 import re
+from urllib.parse import urljoin
+
+import requests
 
 from ..serializers import (
     PortScannerSerializer,
@@ -121,3 +125,30 @@ class NmapService:
             print("Error: ", e)
             return False
 
+    @staticmethod
+    def get_technologies(url):
+        import webtech
+        wt = webtech.WebTech(options={'json': True})
+        try:
+            report = wt.start_from_url('https://shielder.it')
+            return report
+        except webtech.utils.ConnectionException as e:
+            raise e
+    
+    @staticmethod
+    def extract_robots_txt(url):
+        robots_url = urljoin(url, "/robots.txt")
+
+        try:
+            response = requests.get(robots_url)
+            response.raise_for_status()  
+            robots_content = StringIO(response.text)
+            routes = []
+            for line in robots_content:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    routes.append(line)
+
+            return routes
+        except requests.exceptions.RequestException as e:
+           raise e

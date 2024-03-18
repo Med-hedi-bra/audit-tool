@@ -28,7 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('docs/', schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
  
-    path('api/v1/nmap/',include('nmap.urls') ),
+    path('api/v1/information-gathering/',include('nmap.urls') ),
     path("api/v1/testing-auth/",include('testing_auth.urls') ),
     
     # for serving static files such as pdf
