@@ -8,8 +8,6 @@ from nmap.services.PortScannerReportService import PortScannerReportService
 from .services.PortScannerService import PortScannerService
 import ipaddress
 from django.conf import settings
-
-import os
 from django.views.decorators.csrf import csrf_exempt
 
 
