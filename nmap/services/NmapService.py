@@ -71,7 +71,6 @@ class NmapService:
     @staticmethod
     def extract_uptime(nmap_output):
         pattern_uptime = r"Uptime guess: (.+?) days.*\n"
-        print("Nmap output: ", nmap_output)
         match_uptime = re.findall(pattern_uptime, nmap_output, re.DOTALL)
         uptime = match_uptime[0] if match_uptime else ""
         uptime = "".join(uptime.split("."))
@@ -130,7 +129,7 @@ class NmapService:
         import webtech
         wt = webtech.WebTech(options={'json': True})
         try:
-            report = wt.start_from_url('https://shielder.it')
+            report = wt.start_from_url(url)
             return report
         except webtech.utils.ConnectionException as e:
             raise e

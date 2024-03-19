@@ -1,14 +1,14 @@
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from django.http import JsonResponse
 from nmap.services.DnsService import DnsService
 from nmap.services.NmapService import NmapService
 from nmap.services.PortScannerReportService import PortScannerReportService
 from .services.PortScannerService import PortScannerService
 import ipaddress
-from django.http import HttpResponse
 from django.conf import settings
-from rest_framework.response import Response
-from rest_framework.views import APIView
+
 import os
 from django.views.decorators.csrf import csrf_exempt
 
