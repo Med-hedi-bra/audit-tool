@@ -16,19 +16,20 @@ class PortScanner(models.Model):
     mac_address = models.TextField()
     uptime_in_days = models.TextField()
     network_distance_in_hops = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
     
     
     def __str__(self):
-        return f"ID: {self.id} | Domain: {self.domain} | IP: {self.ip} | OS Version: {self.os_version} | MAC Address: {self.mac_address} | UserID: {self.idUser} | Uptime in days: {self.uptime_in_days} | Network Distance in hops: {self.network_distance_in_hops}"
+        return f"ID: {self.id}  | Created_at: {self.created_at} | Domain: {self.domain} | IP: {self.ip} | OS Version: {self.os_version} | MAC Address: {self.mac_address} | UserID: {self.idUser} | Uptime in days: {self.uptime_in_days} | Network Distance in hops: {self.network_distance_in_hops}"
 
 
 class PortScannerReport(models.Model):
     port_scanner = models.OneToOneField(PortScanner,on_delete=models.DO_NOTHING,primary_key=True)
     filename = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"ID: {self.port_scanner.id} | Filename: {self.filename} | Created_at: {self.created_at}"
+        return f"ID: {self.port_scanner.id} | Filename: {self.filename}"
 
 
 class PortScannerLine(models.Model):

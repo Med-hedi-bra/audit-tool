@@ -20,13 +20,13 @@ class PortScannerLineSerializer(serializers.ModelSerializer):
 class PortScannerReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = PortScannerReport
-        fields = ["id", "filename", "date"]
+        fields = ["id", "filename"]
 
 class PortScannerSerializer(serializers.ModelSerializer):
     scanner_line = PortScannerLineSerializer(many=True, read_only=True)
     class Meta:
         model = PortScanner
-        fields = ["id", "domain", "ip","scanner_line","os_version","mac_address","uptime_in_days","network_distance_in_hops", "idUser"]
+        fields = ["id","created_at", "domain", "ip","scanner_line","os_version","mac_address","uptime_in_days","network_distance_in_hops", "idUser"]
 
 
 class DnsResolverIpv4Serializer(serializers.ModelSerializer):
