@@ -2,14 +2,13 @@ from io import StringIO
 import subprocess
 import re
 from urllib.parse import urljoin
-
 import requests
-
 from ..serializers import (
     PortScannerSerializer,
 )
-
 from .PortScannerService import PortScannerService
+from application import logger
+import webtech
 
 DEFAULT_TOP_PORTS_SCAN = 1000
 
@@ -92,24 +91,22 @@ class NmapService:
 
     @staticmethod
     def execute_port_scan(ip, domain, top_ports):
-        if top_ports == None:
-            # top_ports = DEFAULT_TOP_PORTS_SCAN
-            command = f"sudo nmap -sV -O -v --port-ratio 0.03 {ip}"
-
-        else:
-            command = f"sudo nmap -sV -O -v --top-port {top_ports} {ip}"
-
         try:
+            if top_ports is None:
+                command = f"sudo nmap -sV -O -v --port-ratio 0.03 {ip}"
+            else:
+                command = f"sudo nmap -sV -O -v --top-port {top_ports} {ip}"
 
-            execution = subprocess.run(
-                command, shell=True, capture_output=True, text=True
-            )
+            logger.info(f"Executing port scan for IP: {ip}, Domain: {domain}, Top ports: {top_ports}")
+            execution = subprocess.run(command, shell=True, capture_output=True, text=True)
             result = execution.stdout
+
             ports_info = NmapService.extract_ports_info(result)
             mac = NmapService.extract_mac_addresse(result)
             os_version = NmapService.extract_os_version(result)
             uptime = NmapService.extract_uptime(result)
             network_distance = NmapService.extract_network_distance(result)
+
             scanner = PortScannerService.create_port_scanner(
                 ip=ip,
                 domain=domain,
@@ -119,28 +116,32 @@ class NmapService:
                 uptime_in_days=uptime,
                 network_distance_in_hops=network_distance,
             )
-            return PortScannerSerializer(scanner).data
+            serialized_data = PortScannerSerializer(scanner).data
+            logger.info(f"Port scan completed successfully for IP: {ip}, Domain: {domain}, Top ports: {top_ports}")
+            return serialized_data
         except Exception as e:
-            print("Error: ", e)
+            logger.error(f"Error occurred during port scan for IP: {ip}, Domain: {domain}, Top ports: {top_ports}: {e}")
             return False
-
     @staticmethod
     def get_technologies(url):
-        import webtech
-        wt = webtech.WebTech(options={'json': True})
         try:
+            logger.info(f"Retrieving technologies for URL: {url}")
+            wt = webtech.WebTech(options={'json': True})
             report = wt.start_from_url(url)
+            logger.info("Technologies retrieved successfully")
             return report
         except webtech.utils.ConnectionException as e:
+            logger.error(f"Connection error occurred while retrieving technologies for URL: {url}: {e}")
             raise e
-    
     @staticmethod
     def extract_robots_txt(url):
-        robots_url = urljoin(url, "/robots.txt")
-
         try:
+            logger.info(f"Extracting robots.txt for URL: {url}")
+            
+            robots_url = urljoin(url, "/robots.txt")
             response = requests.get(robots_url)
-            response.raise_for_status()  
+            response.raise_for_status()  # Raise an exception for 4XX or 5XX status codes
+            
             robots_content = StringIO(response.text)
             routes = []
             for line in robots_content:
@@ -148,6 +149,8 @@ class NmapService:
                 if line and not line.startswith('#'):
                     routes.append(line)
 
+            logger.info("Robots.txt extracted successfully")
             return routes
         except requests.exceptions.RequestException as e:
-           raise e
+            logger.error(f"Error occurred while extracting robots.txt for URL: {url}: {e}")
+            raise e

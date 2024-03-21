@@ -9,6 +9,10 @@ from .services.PortScannerService import PortScannerService
 import ipaddress
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from application import logger
+
+
+
 
 
 
@@ -91,7 +95,6 @@ def get_host_infomations_by_ip(request):
         try:
             # we should validate that is a valid ip address
             ipaddress.ip_address(ip)
-            print("IP: ", ip)
             scan = NmapService.execute_port_scan(ip, "", top_ports)
             if scan:
                 idScan = scan["id"]
@@ -181,9 +184,12 @@ from drf_yasg.utils import swagger_auto_schema
 #         responses={200: MailServerSerializer(many=True)}
 # )
 
+
+
 @api_view(["GET"])
 def convert_domain_to_mail_server(request):
     if "domain" in request.query_params and request.query_params["domain"]:
+        logger.info("Convert domain to mail server")
         domain = request.query_params["domain"]
         DnsService.execute_collect_ipv4_ipv6_mail_server_by_domain(domain)
         mail_servers = DnsService.get_all_mail_server_by_domain_as_json(domain)

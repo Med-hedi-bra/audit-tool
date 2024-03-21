@@ -1,11 +1,14 @@
 import re
 import subprocess
-from..models import DnsResolverIpv4, DnsResolverIpv6, MailServer
+from ..models import DnsResolverIpv4, DnsResolverIpv6, MailServer
+from application import logger
+
 
 class DnsService:
     @staticmethod
     def execute_collect_ipv4_ipv6_mail_server_by_domain(domain):
         try:
+            logger.info(f"Executing DNS resolution for domain: {domain}")
             # get the ipv4 addresses and mail servers
             command = f"host  {domain}"
             execution = subprocess.run(
@@ -14,6 +17,7 @@ class DnsService:
             result = execution.stdout
             not_found_pattern = r" not found"
             if re.search(not_found_pattern, result):
+                logger.warning(f"Domain '{domain}' not found")
                 return False
 
             ipv4_addresses = re.findall(r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})", result)
@@ -47,42 +51,69 @@ class DnsService:
             for ipv6 in ipv6_addresses:
                 DnsResolverIpv6.objects.create(host=domain, ipv6=ipv6)
 
+            logger.info(f"DNS resolution successful for domain: {domain}")
             return True
         except:
+            logger.error(
+                f"Error occurred during DNS resolution for domain '{domain}': {e}"
+            )
             return False
 
-    
     @staticmethod
     def get_all_dns_resolver_ipv4_by_domain_as_json(domain):
-        ip_addresses = DnsResolverIpv4.objects.filter(host=domain)
-        ip_address_list = []
-        for obj in ip_addresses:
-            ip_address_list.append({"id": obj.id, "host": obj.host, "ipv4": obj.ipv4})
-        return ip_address_list
-    
+        try:
+            logger.info(f"Retrieving IPv4 addresses for domain: {domain}")
+            ip_addresses = DnsResolverIpv4.objects.filter(host=domain)
+            ip_address_list = [
+                {"id": obj.id, "host": obj.host, "ipv4": obj.ipv4}
+                for obj in ip_addresses
+            ]
+
+            logger.info(
+                f"Retrieved {len(ip_address_list)} IPv4 addresses for domain: {domain}"
+            )
+            return ip_address_list
+        except Exception as e:
+            logger.error(
+                f"Error occurred while retrieving IPv4 addresses for domain '{domain}': {e}"
+            )
+            return []
+
     @staticmethod
     def get_all_dns_resolver_ipv6_by_domain_as_json(domain):
-        ip_addresses = DnsResolverIpv6.objects.filter(host=domain)
-        ip_address_list = []
-        for obj in ip_addresses:
-            ip_address_list.append({"id": obj.id, "host": obj.host, "ipv6": obj.ipv6})
-        return ip_address_list
+        try:
+            logger.info(f"Retrieving IPv6 addresses for domain: {domain}")
+            ip_addresses = DnsResolverIpv6.objects.filter(host=domain)
+            ip_address_list = [
+                {"id": obj.id, "host": obj.host, "ipv6": obj.ipv6}
+                for obj in ip_addresses
+            ]
+            logger.info(
+                f"Retrieved {len(ip_address_list)} IPv6 addresses for domain: {domain}"
+            )
+            return ip_address_list
+        except Exception as e:
+            logger.error(
+                f"Error occurred while retrieving IPv6 addresses for domain '{domain}': {e}"
+            )
+            return []
 
     @staticmethod
     def get_all_mail_server_by_domain_as_json(domain):
-        mail_servers = MailServer.objects.filter(host=domain)
-        mail_servers_list = []
-        for obj in mail_servers:
-            mail_servers_list.append(
+        try:
+            logger.info(f"Retrieving mail servers for domain: {domain}")
+            mail_servers = MailServer.objects.filter(host=domain)
+            mail_servers_list = [
                 {
                     "id": obj.id,
                     "host": obj.host,
                     "mail-server": obj.server,
                     "priority": obj.priority,
                 }
-            )
-        return mail_servers_list
-    
-    
-    
-    
+                for obj in mail_servers
+            ]
+            logger.info(f"Retrieved {len(mail_servers_list)} mail servers for domain: {domain}")
+            return mail_servers_list
+        except Exception as e:
+            logger.error(f"Error occurred while retrieving mail servers for domain '{domain}': {e}")
+            return []
