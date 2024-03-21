@@ -24,6 +24,7 @@ db.sqlite3
 
 # Ignore logs
 *.log
+/logs/
 
 # Ignore any backup files
 *~
