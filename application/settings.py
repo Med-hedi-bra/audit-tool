@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+import logging
+import logging.handlers
+import queue
+import atexit
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -139,3 +145,76 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_URL = 'api/v1/assets/'
+
+
+
+
+
+
+
+
+# To prevent exposing sensitive informations in logs files
+load_dotenv()
+if(os.getenv('DJANGO_ENV') == "DEV"):
+    log_format = "[%(levelname)s|%(module)s|F:%(funcName)s|L%(lineno)d] %(asctime)s: %(message)s"
+else:
+    log_format = "[%(levelname)s] %(asctime)s: %(message)s"
+    
+    
+# Configure logging 
+
+log_queue = queue.Queue(-1)
+
+handlers = [
+    logging.handlers.RotatingFileHandler(filename="logs/async_log.log", maxBytes=10000, backupCount=3),
+    # Add more asynchronous handlers for other destinations as needed
+    # logging.StreamHandler()  
+    
+
+]
+
+queue_listener = logging.handlers.QueueListener(log_queue, *handlers)
+queue_listener.start()
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": "%(levelname)s: %(message)s"
+        },
+        "detailed": {
+            "format": log_format,
+            "datefmt": "%Y-%m-%dT%H:%M:%S%z"
+        }
+    },
+    "handlers": {
+        "queue": {
+            "class": "logging.handlers.QueueHandler",
+            "level": "INFO",
+            "formatter": "detailed",
+            "queue": log_queue  
+        },
+        # Add synchronous handlers for other destinations 
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "detailed",
+            "filename": "logs/sync_log.log",
+            "maxBytes": 10000,
+            "backupCount": 3
+        }
+    },
+    "loggers": {
+        "": {
+            "level": "INFO",
+            # I choose to log using async and sync handlers
+            "handlers": ["queue","file"]  
+        }
+    }
+}
+
+# Add cleanup on exit to stop the QueueListener
+atexit.register(queue_listener.stop) 
+
+
+
