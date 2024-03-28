@@ -6,8 +6,27 @@ import xml.etree.ElementTree as ET
 from rest_framework.response import Response
 import json
 from django.views.decorators.csrf import csrf_exempt
+from .services.OwaspZapScanService import OwaspZapScan
 
 # Create your views here.
+
+
+@api_view(["GET"])
+def owasp_spider(request):
+    if "target" not in request.query_params:
+        return JsonResponse({"error": "Invalid request"}, status=400)
+    target = request.query_params["target"]
+    OwaspZapScan.spider(target)
+    return JsonResponse({"message": "This is the OWASP spider endpoint"}, status=200)
+
+@api_view(["GET"])
+def owasp_scan(request):
+    if "target" not in request.query_params:
+        return JsonResponse({"error": "Invalid request"}, status=400)
+    target = request.query_params["target"]
+    OwaspZapScan.testing(target)
+    return JsonResponse({"message": "This is the OWASP scan endpoint"}, status=200)
+
 
 
 @api_view(["POST"])
