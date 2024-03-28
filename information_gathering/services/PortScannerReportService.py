@@ -3,8 +3,8 @@ import os
 from django.conf import settings
 from reportlab.pdfgen import canvas
 
-from nmap.models import PortScannerReport
-from nmap.services.PortScannerService import PortScannerService
+from ..models import PortScannerReport
+from .PortScannerService import PortScannerService
 from application import logger
 
 

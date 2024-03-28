@@ -51,8 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
 
-    'nmap',
-    'testing_auth',
+    'information_gathering',
+    'enumeration',
     'rest_framework_swagger',
     'drf_yasg',
     'rest_framework',
@@ -164,6 +164,7 @@ else:
 # Configure logging 
 
 log_queue = queue.Queue(-1)
+
 
 handlers = [
     logging.handlers.RotatingFileHandler(filename="logs/async_log.log", maxBytes=10000, backupCount=3),
