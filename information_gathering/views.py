@@ -2,9 +2,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from django.http import JsonResponse
-from nmap.services.DnsService import DnsService
-from nmap.services.NmapService import NmapService
-from nmap.services.PortScannerReportService import PortScannerReportService
+from .services.DnsService import DnsService
+from .services.NmapService import NmapService
+from .services.PortScannerReportService import PortScannerReportService
 from .services.PortScannerService import PortScannerService
 import ipaddress
 from django.conf import settings
@@ -203,10 +203,11 @@ def get_repport(request,id):
 
 @api_view(["GET"])
 def get_technologies(request):
-    if "url" not in request.data:
+    print("get_technologies")
+    if "target" not in request.data:
         return JsonResponse({"error":"Invalid request"}, status=400)
     try:
-        response = NmapService.get_technologies(request.data["url"])
+        response = NmapService.get_technologies(request.data["target"])
         return JsonResponse(response, safe=False)
     except:
         return JsonResponse({"error":"Error fetching technologies"}, status=400)

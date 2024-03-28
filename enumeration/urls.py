@@ -1,4 +1,4 @@
-from testing_auth import views
+from enumeration import views
 from django.urls import path
 
 

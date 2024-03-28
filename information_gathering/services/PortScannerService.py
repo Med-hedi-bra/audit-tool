@@ -1,9 +1,6 @@
 
-import os
-from reportlab.pdfgen import canvas
-from django.conf import settings
-from nmap.models import PortScanner
-from nmap.serializers import PortScannerReportSerializer, PortScannerSerializer, PortScannerLineSerializer
+from ..models import PortScanner
+from ..serializers import  PortScannerSerializer, PortScannerLineSerializer
 from application import logger
 
 class PortScannerService:
@@ -77,7 +74,7 @@ class PortScannerService:
                     service_version=element["service_version"],
                 )
             #import here to avoid circular import
-            from nmap.services.PortScannerReportService import PortScannerReportService
+            from .PortScannerReportService import PortScannerReportService
             PortScannerReportService.generate_report(port_scanner)
             
             logger.info("Port scanner created successfully")

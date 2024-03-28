@@ -123,11 +123,11 @@ class NmapService:
             logger.error(f"Error occurred during port scan for IP: {ip}, Domain: {domain}, Top ports: {top_ports}: {e}")
             return False
     @staticmethod
-    def get_technologies(url):
+    def get_technologies(target):
         try:
-            logger.info(f"Retrieving technologies for URL: {url}")
+            logger.info(f"Retrieving technologies for URL: {target}")
             wt = webtech.WebTech(options={'json': True})
-            report = wt.start_from_url(url)
+            report = wt.start_from_url(target)
             logger.info("Technologies retrieved successfully")
             return report
         except webtech.utils.ConnectionException as e:
