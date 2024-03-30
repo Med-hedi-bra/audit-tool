@@ -162,12 +162,14 @@ else:
     
     
 # Configure logging 
-
-log_queue = queue.Queue(-1)
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
+log_queue = queue.Queue(-1) 
 
 
 handlers = [
-    logging.handlers.RotatingFileHandler(filename="logs/async_log.log", maxBytes=10000, backupCount=3),
+    logging.handlers.RotatingFileHandler(filename=os.path.join(LOGS_DIR, "async_log.log"), maxBytes=10000, backupCount=3),
     # Add more asynchronous handlers for other destinations as needed
     # logging.StreamHandler()  
     
@@ -200,7 +202,7 @@ LOGGING = {
             "class": "logging.handlers.RotatingFileHandler",
             "level": "INFO",
             "formatter": "detailed",
-            "filename": "logs/sync_log.log",
+            "filename": os.path.join(LOGS_DIR,"sync_log.log"),
             "maxBytes": 10000,
             "backupCount": 3
         }
