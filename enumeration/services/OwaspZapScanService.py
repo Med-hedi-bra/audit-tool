@@ -2,63 +2,68 @@ import json
 import time
 import requests
 from zapv2 import ZAPv2
+from application import logger
+from dotenv import load_dotenv
+import os
 
-
-
-# target = "https://juice-shop.herokuapp.com"
-
-
+load_dotenv()
+api_key = os.getenv("ZAP_DOCKER_API_KEY")
+http_proxy = os.getenv("ZAP_HTTP_PROXY")
+https_proxy = os.getenv("ZAP_HTTPS_PROXY")
 
 class OwaspZapScan:
-    #use .env
-    apiKey = "mohamed"
     zap = ZAPv2(
-    apikey=apiKey,
-    proxies={"http": "http://127.0.0.1:8091", "https": "http://127.0.0.1:8091"},
+    apikey=api_key,
+    proxies={"http": http_proxy, "https": https_proxy},
 )
     
 
     @staticmethod
     def spider(target):
-
-        print("Spidering target {}".format(target))
-
+        
+        logger.info(f"Spidering target {target}")
         scanID = OwaspZapScan.zap.spider.scan(target)
-
         while int(OwaspZapScan.zap.spider.status(scanID)) < 100:
             print("Spider progress %: {}".format(OwaspZapScan.zap.spider.status(scanID)))
             time.sleep(1)
-
+        logger.info("Spider has completed!")
         print("Spider has completed!")
-        return scanID
+
     
     
     @staticmethod
-    def testing(target):
-
-        # TODO : explore the app (Spider, etc) before using the Active Scan API, Refer the explore section
-        print('Active Scanning target {}'.format(target))
+    def active_scan(target):
+        
+        OwaspZapScan.spider(target)
+        logger.info(f"Active Scanning target {target}")
         scanID = OwaspZapScan.zap.ascan.scan(target)
-        print('Scan ID: {}'.format(scanID))
+        logger.info(f"Scan ID: {scanID}")
         while int(OwaspZapScan.zap.ascan.status(scanID)) < 100:
             # Loop until the scanner has finished
             print('Scan progress %: {}'.format(OwaspZapScan.zap.ascan.status(scanID)))
             time.sleep(5)
-
-        print('Active Scan completed')
+        logger.info('Active Scan completed')
         # Print vulnerabilities found by the scanning
         print('Hosts: {}'.format(', '.join(OwaspZapScan.zap.core.hosts)))
-        print('Alerts: ')
-        print(OwaspZapScan.zap.core.alerts(baseurl=target))
+
         
         
-        
-        report_json = OwaspZapScan.zap.core.jsonreport(apikey=OwaspZapScan.apiKey)
-        report_html = OwaspZapScan.zap.core.htmlreport(apikey=OwaspZapScan.apiKey)
+        alerts = OwaspZapScan.zap.core.alerts(baseurl=target)
+        report_json = OwaspZapScan.zap.core.jsonreport(apikey=api_key)
+        report_html = OwaspZapScan.zap.core.htmlreport(apikey=api_key)
 
         with open("zap_passive_scan_report.json", "w") as report_file:
             report_file.write(report_json)
         
         with open("zap_passive_scan_report.html", "w") as report_file:
             report_file.write(report_html)
+        with open("zap_passive_scan_reportRapport.json", "w") as file:
+            json.dump(alerts, file,indent=4)
 
+
+
+# TODO: 
+# 1. Add a method to generate an owasp report
+# 2. Extract alerts information and saved it dbase
+# 3. Add boot function to launch owasp docker container to create logs folder, owasp report folder also
+# 4. Add env varibales as apiKey
