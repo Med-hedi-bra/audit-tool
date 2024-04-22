@@ -46,6 +46,8 @@ local_settings.py
 *.sqlite3
 test*.py
 /reports/
+.env
+nmap.txt
 
 
 
