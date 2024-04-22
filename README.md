@@ -74,7 +74,7 @@ To start the project, execute the shell script named entrypoint.sh located in th
 ```
 ## Architectures
 ### Database
-![database schema](./img/database_schema.png)
+![database schema](./architecture/database_schema.png)
 
 
 
