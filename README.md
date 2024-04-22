@@ -24,6 +24,13 @@ Make sure you have the following installed:
 
 - Create a new directory for your project
 
+- Create a 'src' folder at the root level of your project. This folder will house the source code of your project.
+
+- Make sure both the source code directory and the virtualenv directory are situated at the same level.
+
+Additionally, for your convenience, there's an exportation file available for a Postman collection named 'Security Audit.postman_collection.json'. You can utilize it to streamline testing and ensure comprehensive security assessment.
+
+
 ### 2. Set Up a Virtual Environment
 **Windows**
 ```
