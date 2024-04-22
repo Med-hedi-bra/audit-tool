@@ -198,7 +198,7 @@ def convert_domain_to_mail_server(request):
 @api_view(["GET"])
 def get_repport(request,id):
     filename = PortScannerReportService.get_report_by_id(id)
-    pdf_url = request.build_absolute_uri(settings.MEDIA_URL + filename)
+    pdf_url = request.build_absolute_uri(settings.NMAP_REPORTS_URL + filename)
     return Response({'pdf_url': pdf_url})
 
 @api_view(["GET"])

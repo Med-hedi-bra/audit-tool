@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
  
 def create_reports_directory():
     current_directory = os.getcwd()
+    nmap_report_directory = current_directory + "/reports/nmap"
     owasp_report_directory = current_directory + "/reports/owasp"
     skipfish_report_directory = current_directory + "/reports/skipfish"
     
@@ -17,5 +18,7 @@ def create_reports_directory():
         os.makedirs(owasp_report_directory)
     if not os.path.exists(skipfish_report_directory):
         os.makedirs(skipfish_report_directory)
+    if not os.path.exists(nmap_report_directory):
+        os.makedirs(nmap_report_directory)
  
 create_reports_directory()   

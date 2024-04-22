@@ -23,8 +23,8 @@ class PortScannerReportService:
             scan_info = scanner["port_scanner"]
 
             # Set filename for the report
-            filename = f'hello_world{scannerInstance.id}.pdf'
-            file_path = os.path.join(settings.MEDIA_ROOT, filename)
+            filename = f'Nmap_report{scannerInstance.id}.pdf'
+            file_path = os.path.join(settings.NMAP_REPORTS_ROOT, filename)
 
             # Create PDF canvas
             pdf = canvas.Canvas(file_path)

@@ -6,6 +6,7 @@ from .models import (
     DnsResolverIpv6,
     MailServer,
     PortScannerReport,
+    
 )
 
 # Register your models here.

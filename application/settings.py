@@ -141,10 +141,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+  
 
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'assets')
-MEDIA_URL = 'api/v1/assets/'
+ZAP_REPORTS_ROOT = os.path.join(BASE_DIR, 'reports/owasp/')
+ZAP_REPORTS_URL = '/api/v1/reports/owasp/'
+SKIPFISH_REPORTS_ROOT = os.path.join(BASE_DIR, 'reports/skipfish/')
+SKIPFISH_REPORTS_URL = '/api/v1/reports/skipfish/'
+NMAP_REPORTS_ROOT = os.path.join(BASE_DIR, 'reports/nmap/')
+NMAP_REPORTS_URL = '/api/v1/reports/nmap/'
 
 
 
