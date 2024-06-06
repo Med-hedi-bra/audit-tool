@@ -32,7 +32,8 @@ urlpatterns = [
     path("api/v1/enumeration/",include('enumeration.urls') ),
     
     # for serving static files such as pdf
-    path("api/v1/assets/<path:path>/", serve, {"document_root": settings.MEDIA_ROOT}),
-    
+    path("api/v1/reports/owasp/<path:path>/", serve, {"document_root": settings.ZAP_REPORTS_ROOT}),
+    path("api/v1/reports/skipfish/<path:path>/", serve, {"document_root": settings.SKIPFISH_REPORTS_ROOT}),
+    path("api/v1/reports/nmap/<path:path>/", serve, {"document_root": settings.NMAP_REPORTS_ROOT})
 ]
-  
+    
